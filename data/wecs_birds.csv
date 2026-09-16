@@ -1,0 +1,50 @@
+Unnamed: 0.1,Unnamed: 0,Submission ID,Common Name,Scientific Name,Taxonomic Order,Count,State/Province,County,Location ID,Location,Latitude,Longitude,Date,Time,Protocol,Duration (Min),All Obs Reported,Distance Traveled (km),Area Covered (ha),Number of Observers,Breeding Code,Observation Details,Checklist Comments,ML Catalog Numbers,Name
+0.0,0.0,S391306925,Ring-necked Pheasant,Phasianus colchicus,1477,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+1.0,1.0,S374602825,Eurasian Green Woodpecker,Picus viridis,11673,X,GB-ENG,Norfolk,L74064343,Norfolk,52.4380317,1.0106917,2026-07-21,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+2.0,2.0,S368077739,Eurasian Magpie,Pica pica,21467,X,GB-SCT,Glasgow,L72532286,dawsholme park,55.8998642,-4.30617,2026-07-05,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+3.0,3.0,S368066750,Eurasian Jackdaw,Coloeus monedula,21514,X,GB-SCT,Glasgow,L72529813,dawsholme park,55.8975143,-4.316545,2026-07-05,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+4.0,4.0,S368066909,Carrion Crow,Corvus corone,21575,X,GB-SCT,Glasgow,L72529813,dawsholme park,55.8975143,-4.316545,2026-07-05,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+5.0,5.0,S374601712,Great Tit,Parus major,22175,X,GB-ENG,Norfolk,L74064346,Norfolk,52.4380317,1.0106917,2026-07-21,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+6.0,6.0,S374601768,Great Tit,Parus major,22175,X,GB-ENG,Norfolk,L74064359,Norfolk,52.4380317,1.0106917,2026-07-21,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+7.0,7.0,S374602102,Common Chiffchaff,Phylloscopus collybita,24853,X,GB-ENG,Norfolk,L74064343,Norfolk,52.4380317,1.0106917,2026-07-21,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+8.0,8.0,S374601686,Long-tailed Tit,Aegithalos caudatus,25209,X,GB-ENG,Norfolk,L74064343,Norfolk,52.4380317,1.0106917,2026-07-21,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+9.0,9.0,S361610815,Long-tailed Tit,Aegithalos caudatus,25209,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-06-22,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+10.0,10.0,S362718709,Song Thrush,Turdus philomelos,28433,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-06-24,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+11.0,11.0,S391302234,European Robin,Erithacus rubecula,29253,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+12.0,12.0,S391307084,European Robin,Erithacus rubecula,29253,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+13.0,13.0,S361610906,House Sparrow,Passer domesticus,31534,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-06-22,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+14.0,14.0,S361610706,European Greenfinch,Chloris chloris,32336,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-06-22,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+15.0,15.0,S361611102,European Goldfinch,Carduelis carduelis,32552,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-06-22,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+16.0,16.0,S372419693,European Goldfinch,Carduelis carduelis,32552,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-07-15,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+17.0,17.0,S372419890,European Goldfinch,Carduelis carduelis,32552,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-07-15,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+18.0,18.0,S391307224,European Goldfinch,Carduelis carduelis,32552,X,GB-ENG,Norfolk,L71073549,park common,52.4412393,1.0146561,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+19.0,19.0,S374602678,Yellowhammer,Emberiza citrinella,32733,X,GB-ENG,Norfolk,L74064343,Norfolk,52.4380317,1.0106917,2026-07-21,,eBird - Casual Observation,,0,,,1,,,,,Rosie_G
+20.0,0.0,S368625139,Common Merganser,Mergus merganser,762,X,GB-SCT,Glasgow,L72660007,duck zone,55.9001631,-4.2929798,2026-07-06,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+21.0,1.0,S368622709,Common Wood-Pigeon,Columba palumbus,1885,X,GB-SCT,Glasgow,L72659404,pigeon corner,55.9019695,-4.2976491,2026-07-06,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+22.0,2.0,S376479809,Eurasian Collared-Dove,Streptopelia decaocto,2031,X,GB-ENG,Norfolk,L74406186,dove hole,52.4412533,1.0146447,2026-07-26,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+23.0,3.0,S372986312,Eurasian Oystercatcher,Haematopus ostralegus,5786,X,GB-SCT,Glasgow,L73689507,Glasgow,55.9008141,-4.2970886,2026-07-17,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+24.0,4.0,S372986473,Eurasian Oystercatcher,Haematopus ostralegus,5786,X,GB-SCT,Glasgow,L73689532,Glasgow,55.9008141,-4.2970886,2026-07-17,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+25.0,5.0,S368633517,Great Black-backed Gull,Larus marinus,6562,X,GB-SCT,Glasgow,L72662164,gull lampost,55.9022348,-4.2970635,2026-07-06,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+26.0,6.0,S368619900,Rose-ringed Parakeet,Psittacula krameri,12350,X,GB-SCT,Glasgow,L72658647,parakeet zone,55.9015796,-4.3033118,2026-07-06,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+27.0,7.0,S368620211,Rose-ringed Parakeet,Psittacula krameri,12350,X,GB-SCT,Glasgow,L72658647,parakeet zone,55.9015796,-4.3033118,2026-07-06,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+28.0,8.0,S368069031,Eurasian Jackdaw,Coloeus monedula,21514,X,GB-SCT,Glasgow,L72530343,forest,55.8918915,-4.3056402,2026-07-05,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+29.0,9.0,S368086223,Eurasian Jackdaw,Coloeus monedula,21514,X,GB-SCT,Glasgow,L72534266,jackdaw central,55.9060364,-4.2890978,2026-07-05,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+30.0,10.0,S368073549,Rook,Corvus frugilegus,21554,X,GB-SCT,Glasgow,L72531358,pond,55.8998654,-4.3061701,2026-07-05,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+31.0,11.0,S370158277,Common Chiffchaff,Phylloscopus collybita,24853,X,GB-SCT,Glasgow,L73007284,Glasgow,55.8930779,-4.3208227,2026-07-10,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+32.0,12.0,S370158353,Common Chiffchaff,Phylloscopus collybita,24853,X,GB-SCT,Glasgow,L73007307,Glasgow,55.8930779,-4.3208227,2026-07-10,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+33.0,13.0,S374049595,House Sparrow,Passer domesticus,31534,X,GB-SCT,Stirling,L19459838,Aberfoyle (Village),56.1785902,-4.3841628,2026-07-19,,eBird - Casual Observation,,0,,,1,,,,,Andy_G
+34.0,0.0,S306527874,Common Woodpigeon,Columba palumbus,1885,X,GB-WLS,Cardiff,L59705308,pigeon,51.4858737,-3.208723,2026-03-06,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+35.0,1.0,S389860376,Common Gull,Larus canus,6513,X,GB-WLS,Bridgend,L76700937,Bridgend,51.4785365,-3.6762025,2026-09-05,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+36.0,2.0,S389861794,European Shag,Gulosus aristotelis,7418,X,GB-WLS,Bridgend,L76700937,Bridgend,51.4785365,-3.6762025,2026-09-05,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+37.0,3.0,S391227949,Ring-necked Parakeet,Psittacula krameri,12350,X,GB-WLS,Cardiff,L59705308,pigeon,51.4858737,-3.208723,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+38.0,4.0,S391294037,Red-billed Chough,Pyrrhocorax pyrrhocorax,21498,X,GB-WLS,Vale of Glamorgan,L76929397,Wales,51.4555016,-3.629504,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+39.0,5.0,S391293605,Eurasian Wren,Troglodytes troglodytes,27258,X,GB-WLS,Cardiff,L76929333,Cardiff,51.4865265,-3.2075968,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+40.0,6.0,S391293692,European Robin,Erithacus rubecula,29253,X,GB-WLS,Cardiff,L76929350,Cardiff,51.4865265,-3.2075968,2026-09-09,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S391874499,Mallard,Anas platyrhynchos,545,X,GB-WLS,Cardiff,L59705308,pigeon,51.4858737,-3.208723,2026-09-11,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S392047428,Common Pheasant,Phasianus colchicus,1477,X,GB-WLS,Bridgend,L77052653,Wales,51.479665,-3.6231083,2026-09-12,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S392047461,European Herring Gull,Larus argentatus,6545,X,GB-WLS,Bridgend,L77052662,"B4524, Wales",51.4740567,-3.6331033,2026-09-12,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S392119275,Great Cormorant,Phalacrocorax carbo,7397,X,GB-WLS,Bridgend,L77063727,Bridgend,51.4962568,-3.5764461,2026-09-12,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S392374736,Common Magpie,Pica pica,21467,X,GB-WLS,Cardiff,L54661864,Thompson's Park,51.4866719,-3.2092054,2026-09-13,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S391875787,Eurasian Jackdaw,Coloeus monedula,21514,X,GB-WLS,Cardiff,L54661864,Thompson's Park,51.4866719,-3.2092054,2026-09-11,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S392366467,Eurasian Nuthatch,Sitta europaea,26966,X,GB-WLS,Cardiff,L59705308,pigeon,51.4858737,-3.208723,2026-09-13,,eBird - Casual Observation,,0,,,1,,,,,Rob_G
+,,S392375553,Eurasian Blackbird,Turdus merula,28500,X,GB-WLS,Cardiff,L59705308,pigeon,51.4858737,-3.208723,2026-09-13,,eBird - Casual Observation,,0,,,1,,,,,Rob_G

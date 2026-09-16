@@ -1,0 +1,51 @@
+common_name,scientific_name,count,date,location,lat,lng,observer
+European Robin,Erithacus rubecula,2,2026-02-14,Ashton Court Estate,51.4489,-2.6389,A. Smith
+Blue Tit,Cyanistes caeruleus,4,2026-02-14,Ashton Court Estate,51.4489,-2.6389,A. Smith
+Eurasian Blackbird,Turdus merula,1,2026-02-15,Frenchay Campus,51.4919,-2.5472,J. Patel
+Wood Pigeon,Columba palumbus,6,2026-02-15,Frenchay Campus,51.4919,-2.5472,J. Patel
+House Sparrow,Passer domesticus,8,2026-02-18,Stoke Park,51.4931,-2.5556,R. Jones
+Great Tit,Parus major,3,2026-02-18,Stoke Park,51.4931,-2.5556,R. Jones
+Carrion Crow,Corvus corone,2,2026-02-20,Eastville Park,51.4772,-2.5583,L. Chen
+Eurasian Magpie,Pica pica,1,2026-02-20,Eastville Park,51.4772,-2.5583,L. Chen
+Common Chaffinch,Fringilla coelebs,5,2026-02-22,Leigh Woods,51.4586,-2.6403,M. O'Brien
+European Goldfinch,Carduelis carduelis,7,2026-02-22,Leigh Woods,51.4586,-2.6403,M. O'Brien
+Eurasian Wren,Troglodytes troglodytes,1,2026-02-25,Badock's Wood,51.4972,-2.6119,S. Ahmed
+Dunnock,Prunella modularis,2,2026-02-25,Badock's Wood,51.4972,-2.6119,S. Ahmed
+Common Starling,Sturnus vulgaris,12,2026-03-01,Ashton Court Estate,51.4489,-2.6389,A. Smith
+European Robin,Erithacus rubecula,1,2026-03-01,Ashton Court Estate,51.4489,-2.6389,A. Smith
+Herring Gull,Larus argentatus,4,2026-03-03,Frenchay Campus,51.4919,-2.5472,J. Patel
+Common Buzzard,Buteo buteo,1,2026-03-03,Frenchay Campus,51.4919,-2.5472,J. Patel
+Eurasian Kestrel,Falco tinnunculus,1,2026-03-05,Stoke Park,51.4931,-2.5556,R. Jones
+Blue Tit,Cyanistes caeruleus,3,2026-03-05,Stoke Park,51.4931,-2.5556,R. Jones
+Barn Swallow,Hirundo rustica,2,2026-03-10,Eastville Park,51.4772,-2.5583,L. Chen
+Common Swift,Apus apus,3,2026-03-10,Eastville Park,51.4772,-2.5583,L. Chen
+Eurasian Nuthatch,Sitta europaea,1,2026-03-12,Leigh Woods,51.4586,-2.6403,M. O'Brien
+Long-tailed Tit,Aegithalos caudatus,6,2026-03-12,Leigh Woods,51.4586,-2.6403,M. O'Brien
+Great Tit,Parus major,2,2026-03-15,Badock's Wood,51.4972,-2.6119,S. Ahmed
+Eurasian Blackbird,Turdus merula,2,2026-03-15,Badock's Wood,51.4972,-2.6119,S. Ahmed
+Wood Pigeon,Columba palumbus,5,2026-04-02,Ashton Court Estate,51.4489,-2.6389,A. Smith
+House Sparrow,Passer domesticus,9,2026-04-02,Ashton Court Estate,51.4489,-2.6389,A. Smith
+European Robin,Erithacus rubecula,1,2026-04-08,Frenchay Campus,51.4919,-2.5472,J. Patel
+Common Chaffinch,Fringilla coelebs,4,2026-04-08,Frenchay Campus,51.4919,-2.5472,J. Patel
+Carrion Crow,Corvus corone,3,2026-04-15,Stoke Park,51.4931,-2.5556,R. Jones
+Eurasian Magpie,Pica pica,2,2026-04-15,Stoke Park,51.4931,-2.5556,R. Jones
+European Goldfinch,Carduelis carduelis,5,2026-05-01,Eastville Park,51.4772,-2.5583,L. Chen
+Common Starling,Sturnus vulgaris,10,2026-05-01,Eastville Park,51.4772,-2.5583,L. Chen
+Barn Swallow,Hirundo rustica,4,2026-05-10,Leigh Woods,51.4586,-2.6403,M. O'Brien
+Common Swift,Apus apus,6,2026-05-10,Leigh Woods,51.4586,-2.6403,M. O'Brien
+Blue Tit,Cyanistes caeruleus,3,2026-06-05,Badock's Wood,51.4972,-2.6119,S. Ahmed
+Dunnock,Prunella modularis,1,2026-06-05,Badock's Wood,51.4972,-2.6119,S. Ahmed
+Eurasian Wren,Troglodytes troglodytes,2,2026-07-20,Ashton Court Estate,51.4489,-2.6389,A. Smith
+Great Tit,Parus major,4,2026-07-20,Ashton Court Estate,51.4489,-2.6389,A. Smith
+Herring Gull,Larus argentatus,3,2026-08-10,Frenchay Campus,51.4919,-2.5472,J. Patel
+Common Buzzard,Buteo buteo,1,2026-08-10,Frenchay Campus,51.4919,-2.5472,J. Patel
+Eurasian Kestrel,Falco tinnunculus,1,2026-08-28,Stoke Park,51.4931,-2.5556,R. Jones
+Long-tailed Tit,Aegithalos caudatus,5,2026-08-28,Stoke Park,51.4931,-2.5556,R. Jones
+European Robin,Erithacus rubecula,2,2026-08-30,Eastville Park,51.4772,-2.5583,L. Chen
+Eurasian Nuthatch,Sitta europaea,1,2026-08-30,Eastville Park,51.4772,-2.5583,L. Chen
+Blue Tit,Cyanistes caeruleus,5,2026-09-01,Leigh Woods,51.4586,-2.6403,M. O'Brien
+Eurasian Blackbird,Turdus merula,3,2026-09-01,Leigh Woods,51.4586,-2.6403,M. O'Brien
+Wood Pigeon,Columba palumbus,4,2026-09-02,Badock's Wood,51.4972,-2.6119,S. Ahmed
+House Sparrow,Passer domesticus,6,2026-09-02,Badock's Wood,51.4972,-2.6119,S. Ahmed
+Common Chaffinch,Fringilla coelebs,3,2026-09-03,Ashton Court Estate,51.4489,-2.6389,A. Smith
+European Goldfinch,Carduelis carduelis,4,2026-09-03,Ashton Court Estate,51.4489,-2.6389,A. Smith
