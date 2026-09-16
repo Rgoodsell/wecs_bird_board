@@ -3,7 +3,6 @@ from __future__ import annotations
 import html
 import math
 import re
-import shutil
 from typing import Callable
 
 import altair as alt
@@ -25,7 +24,6 @@ from species_info import (
     IUCN_LABELS,
     IUCN_RANK,
     SPECIES_TRAITS,
-    UK_CONSERVATION_STATUS,
     UK_SPECIES,
     describe_iucn_criteria,
     get_iucn_criteria,
@@ -462,9 +460,8 @@ st.markdown(
 @st.cache_data
 def load_observations() -> pd.DataFrame:
     """The single source of truth for every tab in the app. Reads straight
-    from the Google Sheet (the same one the upload tab writes to), not the
-    local data/wecs_birds.csv — that file is only ever a one-time seed copy
-    now. Reading it here instead would mean the rest of the app never sees
+    from the Google Sheet (the same one the upload tab writes to). Reading
+    from a local file instead would mean the rest of the app never sees
     what's actually been uploaded, and — on Streamlit Cloud specifically —
     would keep showing whatever's baked into the git repo forever, since
     the local filesystem there doesn't persist across reboots/redeploys.
@@ -1995,7 +1992,7 @@ with upload_tab:
                 # part of it) without asking anyone to remember what they've
                 # submitted before.
                 conn = st.connection("gsheets", type=GSheetsConnection)
-                existing = df_conn = conn.read(ttl=0)
+                existing = conn.read(ttl=0)
 
                 duplicate_count = 0
                 if "Submission ID" in new_rows.columns and "Submission ID" in existing.columns:
