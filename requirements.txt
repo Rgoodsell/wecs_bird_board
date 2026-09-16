@@ -5,4 +5,4 @@ plotly
 streamlit-folium
 folium
 requests
-streamlit_gsheets
+streamlit-gsheets
