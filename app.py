@@ -16,6 +16,7 @@ import streamlit.components.v1 as components
 from folium.plugins import HeatMap, MarkerCluster
 from plotly.subplots import make_subplots
 from streamlit_folium import st_folium
+from streamlit_gsheets import GSheetsConnection
 
 from species_info import (
     IUCN_COLORS,
@@ -96,8 +97,6 @@ def zoom_for_bounds(
     lat_zoom = zoom_for_fraction(map_height_px, lat_fraction)
     lng_zoom = zoom_for_fraction(map_width_px, lng_fraction)
     return max(0, min(math.floor(min(lat_zoom, lng_zoom)), max_zoom))
-
-DATA_PATH = "data/wecs_birds.csv"
 
 # BTO British List species count (Categories A, B and C — every species with
 # an established, naturally-occurring or naturalised UK population).
@@ -461,8 +460,21 @@ st.markdown(
 
 
 @st.cache_data
-def load_observations(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path)
+def load_observations() -> pd.DataFrame:
+    """The single source of truth for every tab in the app. Reads straight
+    from the Google Sheet (the same one the upload tab writes to), not the
+    local data/wecs_birds.csv — that file is only ever a one-time seed copy
+    now. Reading it here instead would mean the rest of the app never sees
+    what's actually been uploaded, and — on Streamlit Cloud specifically —
+    would keep showing whatever's baked into the git repo forever, since
+    the local filesystem there doesn't persist across reboots/redeploys.
+    ttl=0 disables the connection's own internal cache, so the only caching
+    in play is this function's own — cleared explicitly (see
+    load_observations.clear()) right after a successful upload, which is
+    what makes a fresh upload actually show up elsewhere without it.
+    """
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    df = conn.read(ttl=0)
     df = df.rename(
         columns={
             "Common Name": "common_name",
@@ -826,7 +838,7 @@ def render_award_row(
 st.title("🐦 WECS Bird Board 🐦")
 st.caption("The bird is the word")
 
-observations = load_observations(DATA_PATH)
+observations = load_observations()
 
 total_species = observations["common_name"].nunique()
 total_observations = len(observations)
@@ -1849,13 +1861,6 @@ with awards_tab:
         main_criterion = describe_iucn_criteria(assessment.get("criteria"))
         if main_criterion:
             st.caption(f"Assessed as threatened due to {main_criterion}.")
-        uk_status = UK_CONSERVATION_STATUS.get(rarest["common_name"])
-        if uk_status:
-            st.caption(
-                f"In the UK specifically, this species is on the "
-                f"{UK_STATUS_LABELS[uk_status]} — "
-                f"{UK_STATUS_DESCRIPTIONS[uk_status].lower()}."
-            )
 
     awards = [
         dict(
@@ -1941,6 +1946,7 @@ with awards_tab:
         if i < len(awards) - 1:
             st.write("")
 
+
 with upload_tab:
     st.header("Add Your Sightings")
     st.caption(
@@ -1988,7 +1994,9 @@ with upload_tab:
                 # the natural way to spot "I already uploaded this file" (or
                 # part of it) without asking anyone to remember what they've
                 # submitted before.
-                existing = pd.read_csv(DATA_PATH)
+                conn = st.connection("gsheets", type=GSheetsConnection)
+                existing = df_conn = conn.read(ttl=0)
+
                 duplicate_count = 0
                 if "Submission ID" in new_rows.columns and "Submission ID" in existing.columns:
                     is_duplicate = new_rows["Submission ID"].isin(
@@ -2010,14 +2018,14 @@ with upload_tab:
                     st.dataframe(new_rows[preview_cols].head(10), use_container_width=True)
 
                     if st.button("Add to the dashboard", type="primary"):
-                        shutil.copy(DATA_PATH, f"{DATA_PATH}.bak")
                         # 1) combine first, 2) then clean the whole result —
                         # not just the new rows — so the scrub (and any
                         # future cleaning step) always runs against the
                         # dataset as it will actually be saved.
                         combined = pd.concat([existing, new_rows], ignore_index=True)
                         combined = clean_dataset(combined)
-                        combined.to_csv(DATA_PATH, index=False)
+                        conn.update(data=combined)
+
                         load_observations.clear()
                         st.success(
                             f"Added {len(new_rows)} observation(s)! "
