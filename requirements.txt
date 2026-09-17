@@ -1,6 +1,7 @@
 streamlit==1.50.0
 pandas
-altair
+altair==5.5.0
+typing_extensions>=4.16
 plotly
 streamlit-folium
 folium
