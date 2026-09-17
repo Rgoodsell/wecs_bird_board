@@ -98,7 +98,7 @@ def zoom_for_bounds(
 
 # BTO British List species count (Categories A, B and C — every species with
 # an established, naturally-occurring or naturalised UK population).
-UK_TOTAL_SPECIES = 636
+UK_TOTAL_SPECIES = 628
 
 # Paul Tol "Bright" qualitative palette
 TOL_BRIGHT = ["#4477AA", "#EE6677", "#228833", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB"]
@@ -185,7 +185,7 @@ st.markdown(
     div[class*="st-key-metric-card-new-species"] { border-top-color: #CCBB44; }
     div[class*="st-key-metric-card-locations"] { border-top-color: #66CCEE; }
     div[class*="st-key-metric-card-busiest-spot"] { border-top-color: #AA3377; }
-    div[class*="st-key-metric-card-this-week"] { border-top-color: #228833; }
+    div[class*="st-key-metric-card-new-locations"] { border-top-color: #228833; }
     div[class*="st-key-species-card-"] {
         border-radius: 12px;
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -982,8 +982,8 @@ with overview_tab:
             key="uk-species-waffle",
         )
     st.caption(
-        f"{total_species} of {UK_TOTAL_SPECIES} species on the BTO British List "
-        f"(Categories A, B and C) observed so far — {uk_species_pct:.1%}. "
+        f"{total_species} of {UK_TOTAL_SPECIES} species on the BTO British List. \n "
+        f"{uk_species_pct:.1%} of all UK species. \n"
         "Each square represents 1 species."
     )
 
@@ -993,22 +993,32 @@ with map_tab:
     location_counts = observations["location"].value_counts()
     busiest_location = location_counts.idxmax()
     busiest_count = int(location_counts.max())
-    recent_count = len(
-        observations[
-            observations["date"] >= pd.Timestamp.now().normalize() - pd.Timedelta(days=7)
-        ]
+
+    # A location counts as "new" the month it was first ever visited, not
+    # just whenever it happens to appear again — mirrors how New Species
+    # tracks each species' first-ever appearance rather than "seen this
+    # month but not last."
+    first_visited = observations.groupby("location")["date"].min()
+    new_locations_count = int(
+        (first_visited.dt.to_period("M") == today.to_period("M")).sum()
+    )
+    previous_new_locations_count = int(
+        (first_visited.dt.to_period("M") == (today.to_period("M") - 1)).sum()
+    )
+    new_locations_trend = trend_label(
+        new_locations_count, previous_new_locations_count, "vs last month"
     )
 
     map_col1, map_col2, map_col3 = st.columns(3)
     with map_col1:
         with st.container(border=True, key="metric-card-locations"):
-            st.metric("Locations", observations["location"].nunique())
+            st.metric("Total Locations", observations["location"].nunique())
     with map_col2:
         with st.container(border=True, key="metric-card-busiest-spot"):
             st.metric("Busiest Spot", busiest_location, f"{busiest_count} sightings")
     with map_col3:
-        with st.container(border=True, key="metric-card-this-week"):
-            st.metric("This Week", recent_count)
+        with st.container(border=True, key="metric-card-new-locations"):
+            st.metric("New Locations", new_locations_count, delta=new_locations_trend)
 
     st.divider()
 
