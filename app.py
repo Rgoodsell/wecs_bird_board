@@ -541,6 +541,19 @@ def _looks_like_address(location: str) -> bool:
     return last_word in _UPLOAD_STREET_SUFFIX_WORDS
 
 
+def _strip_address_prefix(location: str) -> str | None:
+    """Strips the leading house number and street name off an address-like
+    Location, keeping whatever general-area text follows a comma — e.g.
+    "28 Ferndale Drive, Cardiff" becomes "Cardiff". Returns None if there's
+    no such trailing part to fall back on (e.g. "42 Test Lane" alone)."""
+    match = _UPLOAD_ADDRESS_LEADING_NUMBER.match(location.strip())
+    if not match:
+        return None
+    _, _, area = match.group(1).partition(",")
+    area = area.strip()
+    return area or None
+
+
 def validate_upload_schema(df: pd.DataFrame) -> list[str]:
     """Fatal, whole-file problems — wrong columns, empty, or way too big —
     checked before anything else runs. A non-empty result means the file is
@@ -587,13 +600,16 @@ def clean_upload_rows(df: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
 
 
 def scrub_locations(df: pd.DataFrame) -> pd.DataFrame:
-    """Mirrors scripts/scrub_locations.py: a "Location" that looks like a
-    home address (a house number followed by a street name) gets collapsed
-    to the row's County instead — without a County to fall back on, the
-    address-like value is dropped entirely rather than shown as-is. Applied
-    to the whole combined dataset after a merge (see clean_dataset), not
-    just newly-uploaded rows, so a previously un-scrubbed row — or a later
-    improvement to the address heuristic — gets caught too, not only
+    """A "Location" that looks like a home address (a house number followed
+    by a street name) has that road name and number stripped, keeping
+    whatever general area follows it (e.g. "28 Ferndale Drive, Cardiff"
+    becomes "Cardiff") — general enough to not identify a home, but not so
+    coarse it collapses everyone down to one country-wide value. Only when
+    there's no such general-area text to fall back on does this drop to the
+    row's County, and finally to nothing at all if even that's missing.
+    Applied to the whole combined dataset after a merge (see clean_dataset),
+    not just newly-uploaded rows, so a previously un-scrubbed row — or a
+    later improvement to the address heuristic — gets caught too, not only
     whatever happened to come in on this particular upload."""
     df = df.copy()
 
@@ -601,6 +617,9 @@ def scrub_locations(df: pd.DataFrame) -> pd.DataFrame:
         location = row.get("Location")
         if not isinstance(location, str) or not _looks_like_address(location):
             return location
+        general_area = _strip_address_prefix(location)
+        if general_area:
+            return general_area
         county = row.get("County")
         return county.strip() if isinstance(county, str) and county.strip() else None
 
@@ -914,6 +933,12 @@ with overview_tab:
             .rename("observations")
             .reset_index()
         )
+        # resample("W") buckets to the *following* Sunday, so a season that
+        # ends mid-week gets a final label past the last real observation —
+        # cap it back so the axis never implies data that doesn't exist.
+        last_observed = observations["date"].max()
+        if len(weekly_counts) and weekly_counts["date"].iloc[-1] > last_observed:
+            weekly_counts.loc[weekly_counts.index[-1], "date"] = last_observed
         with st.container(key="chart-narrow-trend"):
             trend_placeholder = st.empty()
 
@@ -1228,6 +1253,14 @@ def build_leaderboard_figure(observations: pd.DataFrame, observer_names: list[st
     # observer's season total, so this drives both the resting charts and the
     # animated replay from one source.
     week_ends = observations.set_index("date").resample("W").size().index
+    # resample("W") buckets to the *following* Sunday, so a season that ends
+    # mid-week gets a final label past the last real observation (e.g. data
+    # through a Monday shows a week ending that Sunday) — cap it back to the
+    # actual last observation date so the axis never implies data that
+    # doesn't exist.
+    last_observed = observations["date"].max()
+    if len(week_ends) and week_ends[-1] > last_observed:
+        week_ends = week_ends[:-1].append(pd.DatetimeIndex([last_observed]))
 
     race = pd.DataFrame(
         [
