@@ -100,6 +100,10 @@ def zoom_for_bounds(
 # an established, naturally-occurring or naturalised UK population).
 UK_TOTAL_SPECIES = 628
 
+# Observations dated before this are ignored everywhere in the app (they stay
+# in the Google Sheet, they're just filtered out on load).
+SEASON_START = pd.Timestamp("2026-09-01")
+
 # Paul Tol "Bright" qualitative palette
 TOL_BRIGHT = ["#4477AA", "#EE6677", "#228833", "#CCBB44", "#66CCEE", "#AA3377", "#BBBBBB"]
 
@@ -490,6 +494,7 @@ def load_observations() -> pd.DataFrame:
     df["date"] = pd.to_datetime(df["date"], format="mixed", dayfirst=True)
     # eBird records presence-only checklists as "X" rather than a number.
     df["count"] = pd.to_numeric(df["count"], errors="coerce").fillna(1).astype(int)
+    df = df[df["date"] >= SEASON_START]
     return df[
         ["common_name", "scientific_name", "count", "date", "location", "lat", "lng", "observer"]
     ]
@@ -701,10 +706,41 @@ def render_static_line_chart(
     placeholder, df: pd.DataFrame, x_col: str, y_col: str, color: str, x_title: str,
     y_title: str, key: str,
 ) -> None:
-    x_range = [df[x_col].min().isoformat(), df[x_col].max().isoformat()]
+    x_min, x_max = df[x_col].min(), df[x_col].max()
+    if x_min == x_max:
+        # A single date (e.g. one checklist) would give a zero-width axis.
+        x_min, x_max = x_min - pd.Timedelta(days=1), x_max + pd.Timedelta(days=1)
+    x_range = [x_min.isoformat(), x_max.isoformat()]
     y_max = df[y_col].max() * 1.1
     fig = build_line_figure(df[x_col], df[y_col], color, x_title, y_title, x_range, y_max)
     placeholder.plotly_chart(fig, use_container_width=True, key=key)
+
+
+def build_top_species_chart(top_species: pd.DataFrame) -> alt.Chart:
+    """Lollipop chart of observation counts per species. Expects columns
+    common_name and observations."""
+    encoding = dict(
+        x=alt.X(
+            "common_name",
+            sort="-y",
+            title="Species",
+            axis=alt.Axis(labelAngle=-40, labelLimit=160, labelOverlap=False),
+        ),
+        y=alt.Y("observations", title="Observations"),
+        color=alt.Color(
+            "common_name", scale=alt.Scale(range=TOL_BRIGHT), legend=None
+        ),
+    )
+    dots = alt.Chart(top_species).mark_circle(size=200).encode(**encoding)
+    stems = alt.Chart(top_species).mark_bar(size=5).encode(**encoding)
+    return (
+        (dots + stems)
+        .properties(height=450)
+        .configure_axis(
+            **{**CHART_AXIS_CONFIG, "labelFontSize": 18, "titleFontSize": 21}
+        )
+        .configure_legend(**CHART_LEGEND_CONFIG)
+    )
 
 
 MEDALS = {0: "🥇", 1: "🥈", 2: "🥉"}
@@ -900,8 +936,8 @@ scientific_names = observations.drop_duplicates("common_name").set_index(
     "common_name"
 )["scientific_name"]
 
-overview_tab, map_tab, species_tab, leaderboard_tab, awards_tab, upload_tab = st.tabs(
-    ["📊 Overview", "🗺️ Map", "🏆 Top Species", "🥇 Leaderboard", "🏅 Awards", "📤 Add Data"]
+overview_tab, map_tab, species_tab, leaderboard_tab, awards_tab, explore_tab, upload_tab = st.tabs(
+    ["📊 Overview", "🗺️ Map", "🏆 Top Species", "🥇 Leaderboard", "🏅 Awards", "🔬 Explore", "📤 Add Data"]
 )
 
 with overview_tab:
@@ -1212,6 +1248,7 @@ with species_tab:
     )
 
     cols_per_row = 5
+    
     with st.container(key="species-cards-grid"):
         for row_start in range(0, len(rest), cols_per_row):
             row_cards = rest[row_start : row_start + cols_per_row]
@@ -1225,30 +1262,8 @@ with species_tab:
     st.divider()
 
     st.subheader("Top Species by Observation Count")
-    species_encoding = dict(
-        x=alt.X(
-            "common_name",
-            sort="-y",
-            title="Species",
-            axis=alt.Axis(labelAngle=-40, labelLimit=160, labelOverlap=False),
-        ),
-        y=alt.Y("observations", title="Observations"),
-        color=alt.Color(
-            "common_name", scale=alt.Scale(range=TOL_BRIGHT), legend=None
-        ),
-    )
-    species_dots = alt.Chart(top_species).mark_circle(size=200).encode(**species_encoding)
-    species_stems = alt.Chart(top_species).mark_bar(size=5).encode(**species_encoding)
-    species_chart = (
-        (species_dots + species_stems)
-        .properties(height=450)
-        .configure_axis(
-            **{**CHART_AXIS_CONFIG, "labelFontSize": 18, "titleFontSize": 21}
-        )
-        .configure_legend(**CHART_LEGEND_CONFIG)
-    )
     with st.container(key="chart-narrow-species"):
-        st.altair_chart(species_chart, use_container_width=True)
+        st.altair_chart(build_top_species_chart(top_species), use_container_width=True)
 
 @st.cache_data
 def build_leaderboard_figure(observations: pd.DataFrame, observer_names: list[str]) -> go.Figure:
@@ -1985,6 +2000,117 @@ with awards_tab:
         render_award_row(i, **award)
         if i < len(awards) - 1:
             st.write("")
+
+with explore_tab:
+    st.header("Explore Your Data")
+    st.caption("Pick an observer to see their own season at a glance.")
+
+    selected = st.selectbox(
+        "Observer",
+        sorted(observations["observer"].dropna().unique()),
+        key="explore-observer",
+    )
+    obs_dat = observations[observations["observer"] == selected]
+    explore_species_total = obs_dat["common_name"].nunique()
+
+    st.caption(
+        f"{selected} has logged {len(obs_dat)} observation(s) of "
+        f"{explore_species_total} species at {obs_dat['location'].nunique()} location(s)."
+    )
+
+    st.divider()
+
+    st.subheader("Top Species")
+    # Ties are broken alphabetically: sort by name first, then a stable sort
+    # by count keeps that order within equal counts.
+    explore_counts = (
+        obs_dat.groupby("common_name")
+        .size()
+        .sort_index()
+        .sort_values(ascending=False, kind="stable")
+        .head(8)
+    )
+    explore_scientific = obs_dat.drop_duplicates("common_name").set_index(
+        "common_name"
+    )["scientific_name"]
+
+    with st.spinner("Fetching species info..."):
+        explore_cards = [
+            {
+                "common_name": name,
+                "scientific_name": explore_scientific[name],
+                "observations": int(n),
+                **get_species_info(name, explore_scientific[name]),
+            }
+            for name, n in explore_counts.items()
+        ]
+
+    explore_cols_per_row = 5
+    with st.container(key="species-cards-grid-explore"):
+        for row_start in range(0, len(explore_cards), explore_cols_per_row):
+            explore_cols = st.columns(explore_cols_per_row)
+            row_cards = explore_cards[row_start : row_start + explore_cols_per_row]
+            for explore_col, explore_card in zip(explore_cols, row_cards):
+                with explore_col:
+                    render_species_card(
+                        explore_card,
+                        key=f"species-card-explore-{explore_card['common_name']}",
+                    )
+
+    st.divider()
+
+    st.subheader("Species Over Time")
+    explore_richness = (
+        obs_dat.groupby("common_name")["date"]
+        .min()
+        .rename("date")
+        .reset_index()
+        .groupby("date")
+        .size()
+        .cumsum()
+        .rename("species_richness")
+        .reset_index()
+    )
+    with st.container(key="chart-narrow-richness-explore"):
+        render_static_line_chart(
+            st.empty(), explore_richness, "date", "species_richness", TOL_BRIGHT[2],
+            "Date", "Cumulative Species", key="explore-richness-chart",
+        )
+
+    st.divider()
+
+    st.subheader("UK Species Coverage")
+    with st.container(key="chart-narrow-waffle-explore"):
+        st.plotly_chart(
+            build_waffle_figure(
+                explore_species_total, UK_TOTAL_SPECIES, TOL_BRIGHT[1], cols=26, cell_px=16
+            ),
+            use_container_width=True,
+            key="explore-uk-species-waffle",
+        )
+    st.caption(
+        f"{explore_species_total} of {UK_TOTAL_SPECIES} species on the BTO British "
+        f"List seen — {explore_species_total / UK_TOTAL_SPECIES:.1%}. "
+        "Each square represents 1 species."
+    )
+
+    st.divider()
+
+    if st.toggle(f"Show all of {selected}'s observations", key="explore-show-table"):
+        st.dataframe(
+            obs_dat.sort_values("date", ascending=False)[
+                ["date", "common_name", "scientific_name", "count", "location"]
+            ],
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "date": st.column_config.DateColumn("Date", format="DD MMM YYYY"),
+                "common_name": "Species",
+                "scientific_name": "Scientific name",
+                "count": "Count",
+                "location": "Location",
+            },
+        )
 
 
 with upload_tab:
